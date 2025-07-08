@@ -2,17 +2,20 @@ from adafruit_circuitplayground import cp
 import time
 import random
 
-
-pattern = []
-# Open
-with open('pattern.txt') as file:
-    for line in file:
-        pattern.append(int(line))
-
+def file_opener():
+    pattern = []
+    # Open
+    with open('pattern.txt') as file:
+        numbers_index = file.read()
+        numbers = numbers_index.split(",")
 # Close
-file.close()
+    file.close()
 
-# Random Color variations
+    for individual in numbers:
+        pattern.append(int(individual))
+    return pattern
+
+    # Random Color variations
 def pixel_color():
     r = random.randint(0, 255)
     g = random.randint(0, 255)
@@ -21,6 +24,7 @@ def pixel_color():
 
 # Runs all the other programs
 def main():
+    pattern = file_opener()
     while True:
         for pixel in pattern:
             cp.pixels[pixel] = pixel_color()
